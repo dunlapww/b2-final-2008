@@ -27,7 +27,12 @@ describe "As a visitor" do
       expect(page).to have_content(@hospital.name)
     end
     
-    it "I see the number of doctors that work at the hospital" do
+    it "I see the number of doctors that work there" do
+      visit "hospitals/#{@hospital.id}"
+      expect(page).to have_content("Num of Doctors: 3")
+    end
+    
+    it "I see the names of doctors that work at the hospital" do
       visit "hospitals/#{@hospital.id}"
       
       within "#doctor-#{@dr_jeff.id}"  do

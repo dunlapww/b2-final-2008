@@ -6,7 +6,7 @@ describe Hospital, type: :model do
   end
 
   describe 'instance_methods' do
-    it '#universities' do
+    before :each do
       @hospital = Hospital.create!({name: "Centura Health"})
       @hospital2 = Hospital.create!({name: "Porters"})
       @hospital3 = Hospital.create!({name: "St. Joes"})
@@ -21,13 +21,22 @@ describe Hospital, type: :model do
       
       @p_greg = @dr_jeff.patients.create!({name: "Greg", age: 30})
       @p_nick = @dr_jeff.patients.create!({name: "Nick", age: 25})
-
+  
       @p_will = @dr_sara.patients.create!({name: "Will", age: 41})
       @p_jen = @dr_sara.patients.create!({name: "Jen", age: 50})
+    end
+
+    it '#universities' do
 
       expect(@hospital.universities).to eq(["Duke", "Stanford"])
       expect(@hospital2.universities).to eq(["Harvard"])
       expect(@hospital3.universities).to eq([])
+    end
+
+    it '#num_of_doctors' do
+      expect(@hospital.num_of_doctors).to eq(3)
+      expect(@hospital2.num_of_doctors).to eq(1)
+      expect(@hospital3.num_of_doctors).to eq(0)
     end
   end
 end
