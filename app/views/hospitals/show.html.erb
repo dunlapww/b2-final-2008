@@ -1,0 +1,18 @@
+<h1><%= @hospital.name %></h1>
+
+Universities Represented: 
+<% @hospital.universities.each do |university| %>
+  <%= university %>, 
+<% end%>
+<br>
+<br>
+
+Num of Doctors: <%= @hospital.num_of_doctors %>
+
+
+<h2>Doctors Employed</h2>
+<% @hospital.doctors.each do |doctor| %>
+  <div id="doctor-<%= doctor.id %>">
+    <%= doctor.name %><br>
+  </div>
+<% end %>

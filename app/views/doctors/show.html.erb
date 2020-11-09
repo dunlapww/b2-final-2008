@@ -1,0 +1,17 @@
+<h1>Doctor's Details</h1>
+<section id="doctor-details">
+  Name: <%= @doctor.name %><br>
+  Specialty: <%= @doctor.specialty %><br>
+  University: <%= @doctor.university %><br>
+  Hospital: <%= @doctor.hospital.name %><br>
+</section>
+
+<h2>Doctor's Patients</h2>
+<% @doctor.patients.each do |patient|%>
+  <div id="patient-<%= patient.id %>">
+    <%= patient.name %>
+    <%= button_to "Remove Patient", "/doctors/#{@doctor.id}/patient_doctors/#{patient.id}", method: :delete %>
+  </div>
+<% end%>
+
+
