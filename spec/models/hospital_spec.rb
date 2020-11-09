@@ -25,9 +25,9 @@ describe Hospital, type: :model do
       @p_will = @dr_sara.patients.create!({name: "Will", age: 41})
       @p_jen = @dr_sara.patients.create!({name: "Jen", age: 50})
 
-      expect(@hospital.universities.pluck(:university)).to eq(["Duke", "Stanford"])
-      expect(@hospital2.universities.pluck(:university)).to eq(["Harvard"])
-      expect(@hospital3.universities.pluck(:university)).to eq([])
+      expect(@hospital.universities).to eq(["Duke", "Stanford"])
+      expect(@hospital2.universities).to eq(["Harvard"])
+      expect(@hospital3.universities).to eq([])
     end
   end
 end
