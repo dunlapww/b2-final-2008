@@ -42,8 +42,37 @@ describe 'As a visitor' do
       within("#patient-#{@p_nick.id}") do
         expect(page).to have_content(@p_nick.name)
       end
-
+      
       expect(page).to_not have_content(@p_will.name)
+    end
+    
+    it "next to each patient I see a button to remove the patient" do
+      visit "/doctors/#{@dr_jeff.id}"
+      
+      within "#patient-#{@p_steve.id}" do
+        expect(page).to have_button("Remove Patient")
+      end
+      
+      within("#patient-#{@p_greg.id}") do
+        expect(page).to have_button("Remove Patient")
+      end
+      
+      within("#patient-#{@p_nick.id}") do
+        expect(page).to have_button("Remove Patient")
+      end
+    end
+    
+    it "when I click a 'remove patient' button, the patient is removed from the doctor and I'm redirected to the doctor show page" do
+      
+      visit "/doctors/#{@dr_jeff.id}"
+      
+      within "#patient-#{@p_steve.id}" do
+        click_on("Remove Patient")
+      end
+      
+      expect(current_path).to eq("/doctors/#{@dr_jeff.id}")
+      expect(page).to_not have_content(@p_steve.id)
+
     end
 
   end
