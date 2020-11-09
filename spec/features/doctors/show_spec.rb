@@ -9,7 +9,7 @@ describe 'As a visitor' do
       
       #patients
       @p_steve = @dr_jeff.patients.create!({name: "Steve", age: 45})
-      @p_steve = PatientDoctor.create!({patient_id: @p_steve.id, doctor_id: @dr_sara.id})
+      PatientDoctor.create!({patient_id: @p_steve.id, doctor_id: @dr_sara.id})
       
       @p_greg = @dr_jeff.patients.create!({name: "Greg", age: 30})
       @p_nick = @dr_jeff.patients.create!({name: "Nick", age: 25})
@@ -18,10 +18,33 @@ describe 'As a visitor' do
       @p_jen = @dr_sara.patients.create!({name: "Jen", age: 50})
 
     end
-    it "I see all the doctor's details" do
-      
+    
+    it "I see all the doctor's details (name, specialty, university)" do
+      visit "/doctors/#{@dr_jeff.id}"
+      within("#doctor-details") do
+        expect(page).to have_content(@dr_jeff.name)
+        expect(page).to have_content(@dr_jeff.specialty)
+        expect(page).to have_content(@dr_jeff.university)
+        expect(page).to have_content(@dr_jeff.hospital.name)
+      end
     end
-    it "I see the name of the hospital where the doctor works"
-    it "I see the names of all the patients this doctor sees"
+
+    it "I see the names of all the patients this doctor sees" do
+      visit "/doctors/#{@dr_jeff.id}"
+      within "#patient-#{@p_steve.id}" do
+        expect(page).to have_content(@p_steve.name)
+      end
+      
+      within("#patient-#{@p_greg.id}") do
+        expect(page).to have_content(@p_greg.name)
+      end
+      
+      within("#patient-#{@p_nick.id}") do
+        expect(page).to have_content(@p_nick.name)
+      end
+
+      expect(page).to_not have_content(@p_will.name)
+    end
+
   end
 end
